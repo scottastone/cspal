@@ -90,9 +90,6 @@ class CS2RequestHandler(BaseHTTPRequestHandler):
                 state['mvps'] = ms.get('mvps', 0)
                 state['score'] = ms.get('score', 0)
             
-            # Position is often in 'position' at top level of player, or sometimes not sent
-            # Check GSI docs: It is usually just 'position': "x, y, z" inside player?
-            # Actually, per docs, forward and position are direct children of 'player' if configured.
             state['position'] = p.get('position', "0,0,0")
 
             if 'weapons' in p:
@@ -256,7 +253,7 @@ if __name__ == "__main__":
     t = threading.Thread(target=run_server, daemon=True)
     t.start()
 
-    with Live(generate_ui(), refresh_per_second=15, screen=True) as live:
+    with Live(generate_ui(), refresh_per_second=10, screen=True) as live:
         try:
             while True:
                 live.update(generate_ui())
